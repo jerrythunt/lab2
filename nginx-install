@@ -1,0 +1,26 @@
+#!/bin/bash
+# Script to install Nginx on the remote Debian EC2 instance
+# Usage: ./nginx-install
+
+# Ensure the environment variables are loaded
+source env-vars.sh
+
+ssh -i "$SSH_KEY_PATH" "$USERNAME@$IP_ADDRESS" << 'EOF'
+
+# Update package lists
+sudo apt-get update -y
+
+# Install Nginx
+sudo apt-get install nginx -y
+
+# Enable Nginx to start on boot
+sudo systemctl enable nginx
+
+# Start Nginx service
+sudo systemctl start nginx
+
+# Check Nginx status
+sudo systemctl status nginx
+EOF
+
+echo "Nginx installation completed on $IP_ADDRESS"

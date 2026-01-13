@@ -1,0 +1,34 @@
+#!/bin/bash
+# Script to write a custom HTML file to Nginx web root on remote Debian
+# The <p> tag will include today's date from the local machine
+# Usage: ./document-write
+
+# Ensure environment variables are loaded
+source env-vars.sh
+
+# Get today's date in day/month/year format
+TODAY=$(date +"%d/%m/%Y")
+
+# Send HTML content to remote server using SSH and heredoc
+ssh -i "$SSH_KEY_PATH" "$USERNAME@$IP_ADDRESS" << EOF
+# Overwrite default Nginx index.html with custom HTML
+sudo tee /var/www/html/index.html > /dev/null << 'HTML'
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Hello World</title>
+</head>
+<body>
+  <h1>Hello World!</h1>
+  <p>Today's date is: $TODAY</p>
+</body>
+</html>
+HTML
+
+# Reload Nginx to apply changes
+sudo systemctl reload nginx
+EOF
+
+echo "HTML document updated and Nginx reloaded on $IP_ADDRESS"
