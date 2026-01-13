@@ -1,4 +1,4 @@
-# AWS SSH Key Setup for lab 2
+# AWS SSH Key Setup for lab 2 by Jerry Hunt and Sami Jabri
 
 This project uses an SSH key pair to securely access AWS EC2 instances.
 
@@ -13,4 +13,6 @@ ssh-keygen -t ed25519 -f ~/.ssh/wkone -C "wkone key"
 - `-f ~/.ssh/wkone` → File path for the private and public keys. The private key will be `~/.ssh/wkone` and the public key `~/.ssh/wkone.pub`.  
 - `-C "wkone AWS key"` → Adds a comment to help identify this key.  
 
-![Screenshot](lab2.png)
+```
+
+![screenshot](lab2.png)
